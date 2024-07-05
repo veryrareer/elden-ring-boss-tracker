@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Elden Ring Boss Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .boss-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .boss-list li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Elden Ring Boss Tracker</h1>
+    <ul class="boss-list" id="boss-list">
+        <!-- Boss Listesi burada olacak -->
+    </ul>
+    <script>
+        const bosses = [
+            "Margit, the Fell Omen",
+            "Godrick the Grafted",
+            "Red Wolf of Radagon",
+            "Rennala, Queen of the Full Moon",
+            "Starscourge Radahn",
+            // Diğer bosslar...
+        ];
+
+        const bossListElement = document.getElementById('boss-list');
+
+        bosses.forEach(boss => {
+            const li = document.createElement('li');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = boss;
+            const label = document.createElement('label');
+            label.htmlFor = boss;
+            label.textContent = boss;
+            li.appendChild(checkbox);
+            li.appendChild(label);
+            bossListElement.appendChild(li);
+
+            // Kullanıcının işaretlediği boss'ları localStorage'da saklama
+            checkbox.addEventListener('change', () => {
+                localStorage.setItem(boss, checkbox.checked);
+            });
+
+            // Sayfa yenilendiğinde işaretli boss'ları geri yükleme
+            if (localStorage.getItem(boss) === 'true') {
+                checkbox.checked = true;
+            }
+        });
+    </script>
+</body>
+</html>
