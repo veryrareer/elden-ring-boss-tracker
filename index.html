@@ -13,6 +13,10 @@
         .boss-list li {
             margin: 5px 0;
         }
+        .death-count {
+            width: 50px;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
@@ -96,8 +100,16 @@
             const label = document.createElement('label');
             label.htmlFor = boss;
             label.textContent = boss;
+
+            const deathCount = document.createElement('input');
+            deathCount.type = 'number';
+            deathCount.className = 'death-count';
+            deathCount.id = boss + '-death-count';
+            deathCount.placeholder = 'Deaths';
+
             li.appendChild(checkbox);
             li.appendChild(label);
+            li.appendChild(deathCount);
             bossListElement.appendChild(li);
 
             // Kullanıcının işaretlediği boss'ları localStorage'da saklama
@@ -105,9 +117,19 @@
                 localStorage.setItem(boss, checkbox.checked);
             });
 
+            // Kullanıcının ölüm sayısını localStorage'da saklama
+            deathCount.addEventListener('input', () => {
+                localStorage.setItem(boss + '-death-count', deathCount.value);
+            });
+
             // Sayfa yenilendiğinde işaretli boss'ları geri yükleme
             if (localStorage.getItem(boss) === 'true') {
                 checkbox.checked = true;
+            }
+
+            // Sayfa yenilendiğinde ölüm sayılarını geri yükleme
+            if (localStorage.getItem(boss + '-death-count')) {
+                deathCount.value = localStorage.getItem(boss + '-death-count');
             }
         });
     </script>
